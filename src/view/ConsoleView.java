@@ -6,7 +6,6 @@ import out.logic.WordleLogic;
 public class ConsoleView{
 	static WordleLogic logic;
 	static{
-
 		logic = new WordleLogic();
 	}
 	public void menu(){
@@ -17,7 +16,11 @@ public class ConsoleView{
 			menuText();
 			Scanner scanner = new Scanner(System.in);
 			if(scanner.hasNext()){
-				choice = scanner.nextInt();
+				try{
+					choice = scanner.nextInt();
+				} catch(InputMismatchException e) {
+					choice = -1;
+				}
 			}
 			switch(choice){
 				case 0:
@@ -27,6 +30,9 @@ public class ConsoleView{
 				case 1:	
 					System.out.println("Start game!");
 					start(5);
+					break;
+				default:
+					System.out.println("Type number 0-1");
 					break;
 			}
 		}while(choice != 0);
@@ -51,15 +57,10 @@ public class ConsoleView{
 		System.out.println();
 	}
 	
-<<<<<<< HEAD
-	static void start(int rounds){
+
+
+	static void start(int rounds){ 
 		logic.start(rounds);
-		
-=======
-	static void start(int rounds){ //запуск игры
-		logic.start(rounds);
-		//System.out.println("==="+logic.getTargetWord());
->>>>>>> 12851a7 (Логика вынеселна из класса ConsoleView в класс WorldeLogic)
 		String choice = "";
 		boolean win = false;
 		do{
@@ -69,7 +70,7 @@ public class ConsoleView{
 			System.out.println("Try to guess the word:");
 			Scanner scanner = new Scanner(System.in);
 			if(scanner.hasNext()){
-				choice = scanner.next();
+				choice = scanner.next().toLowerCase();
 				if(!logic.isWordExist(choice)){
 					System.out.println("This word dont exist");
 					System.out.println("The word consists of 5 Latin letters!!!");

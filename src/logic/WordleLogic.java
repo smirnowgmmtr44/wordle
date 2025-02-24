@@ -8,12 +8,12 @@ import out.storage.WordFileIO;
 
 public class WordleLogic{
 	
-	WordIOInterface storage;		//хранение
+	WordIOInterface storage;
 	List<Character> used;			//коллекция букв которые используюся в загаданом слове
 	List<Character> notUsed;		//коллекция букв которые не используются в загаданом слове 
 	List<Character> onPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове
-	String targetWord;				//загаданое слово
-	int countOfTry;				//количество попыток
+	String targetWord;				
+	int countOfTry;				
 	Pattern pattern;				
 	
 	public WordleLogic(){
@@ -50,9 +50,6 @@ public class WordleLogic{
 	
 	//проверка существует ли в хранилище слово
 	public boolean isWordExist(String word){
-<<<<<<< HEAD
-=======
->>>>>>> 12851a7 (Логика вынеселна из класса ConsoleView в класс WorldeLogic)
 		return isWord(word) &&  storage.search(word);
 	}
 	
@@ -67,11 +64,11 @@ public class WordleLogic{
 			for(int i = 0;i < word.length();i++ ){
 				if(targetWord.indexOf(word.charAt(i))!=-1){
 					
-					if(used.indexOf(word.charAt(i))==-1){ //добавление слова в список букв которые вхоядт в слово
+					if(used.indexOf(word.charAt(i))==-1){
 						used.add(word.charAt(i));	
 					}
 					
-					if(word.charAt(i)==targetWord.charAt(i)){ // добавление буквы на свою позицию или * если не совпадает
+					if(word.charAt(i)==targetWord.charAt(i)){
 						onPosition.add(word.charAt(i));
 					} else{
 						onPosition.add('*');
@@ -79,7 +76,7 @@ public class WordleLogic{
 					
 				} else{
 					
-					if(notUsed.indexOf(word.charAt(i))==-1){ // добавление отсутсвующей буквы  в список
+					if(notUsed.indexOf(word.charAt(i))==-1){
 						notUsed.add(word.charAt(i));
 					}	
 					onPosition.add('*');
@@ -96,9 +93,6 @@ public class WordleLogic{
 		used.clear();
 		notUsed.clear();
 		onPosition.clear();
-<<<<<<< HEAD
-=======
->>>>>>> 12851a7 (Логика вынеселна из класса ConsoleView в класс WorldeLogic)
 	}
 	
 	//выбор случайного слова из хранилища
