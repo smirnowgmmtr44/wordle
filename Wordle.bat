@@ -4,8 +4,9 @@ del /S /Q %~dp0out\*.class
 	::javac -cp %~dp0classes -d %~dp0  %%i\*.java		
 ::)
 javac -cp %~dp0 -d %~dp0  %~dp0src\storage\*.java
-javac -cp %~dp0 -d %~dp0  %~dp0src\view\*.java
 javac -cp %~dp0 -d %~dp0  %~dp0src\logic\*.java
+javac -cp %~dp0 -d %~dp0  %~dp0src\view\*.java
+
 
 
 javac -cp %~dp0 -d %~dp0  %~dp0src\*.java

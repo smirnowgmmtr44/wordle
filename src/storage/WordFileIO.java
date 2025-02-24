@@ -3,14 +3,18 @@ package out.storage;
 import java.io.*;
 import java.util.*;
 
-public class WordIO implements WordIOInterface{
+public class WordFileIO implements WordIOInterface{
 	
 	String fileName;
 	
-	public WordIO(String fileName){
-		this.fileName = fileName;
+	public WordFileIO(){
+		this.fileName = "wordle.txt";
 	}
 	
+	public WordFileIO(String fileName){
+		this.fileName = fileName;
+	}
+
 	public boolean search(String word){
 		 try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
 			String s;
@@ -43,6 +47,7 @@ public class WordIO implements WordIOInterface{
 		}
 		return false;
 	}
+	
 	public List<String> getAllWords(){
 		List<String> words = new LinkedList<String>();
 		try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
@@ -60,6 +65,7 @@ public class WordIO implements WordIOInterface{
 		}
 		return words;
 	}
+	
 	public int getWordsCount(){
 		int count = 0;
 		try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
@@ -78,10 +84,8 @@ public class WordIO implements WordIOInterface{
 		}
 		return count;
 	}
+	
 	public String getWordById(int id){
-	//	Random random =  new Random();
-		//int index = random.nextInt(getWordsCount());
-	//	System.out.println(index);
 		int position = 0;
 		try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
 			String s;

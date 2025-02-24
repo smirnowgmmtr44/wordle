@@ -4,26 +4,28 @@ import java.util.*;
 import java.lang.*;
 import java.util.regex.*;
 import out.storage.WordIOInterface;
-import out.storage.WordIO;
+import out.storage.WordFileIO;
 
 public class WordleLogic{
 	
-	WordIOInterface storage;
-	List<Character> used;
-	List<Character> notUsed;
-	List<Character> onPosition;
-	String targetWord;
-	Pattern pattern;
-	int currentRound;
+	WordIOInterface storage;		//хранение
+	List<Character> used;			//коллекция букв которые используюся в загаданом слове
+	List<Character> notUsed;		//коллекция букв которые не используются в загаданом слове 
+	List<Character> onPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове
+	String targetWord;				//загаданое слово
+	int countOfTry;				//количество попыток
+	Pattern pattern;				
 	
 	public WordleLogic(){
-		storage = new WordIO("dictionary.txt");	// !!!
+		countOfTry = 0;
+		storage = new WordFileIO();
 		used = new LinkedList<Character>();
 		notUsed = new LinkedList<Character>();
 		onPosition = new LinkedList<Character>();
 		targetWord = "";
 		pattern = Pattern.compile("[a-zA-Z]{5}", Pattern.CASE_INSENSITIVE);
 	}
+	
 	public List<Character> getUsed(){
 		return used;
 	}
@@ -33,21 +35,28 @@ public class WordleLogic{
 	public List<Character> getOnPosition(){
 		return onPosition;
 	}
+	public int getCountOfTry(){
+		return countOfTry;
+	}
+	public String getTargetWord(){
+		return targetWord;
+	}
 	
 	//проверка на слово из 5 латинских букв
 	public boolean isWord(String word){
 		Matcher matcher = pattern.matcher(word);
-		return matcher.find();
+		return word.length() == 5 && matcher.find();
 	}
 	
 	//проверка существует ли в списке слово
 	public boolean isWordExist(String word){
-		return isWord(word);
+		//System.out.println(isWord(word));
+		return isWord(word) &&  storage.search(word);
 	}
 	
-	// результаты раунда 
+	//	Метод возвращает true если слово совпадает с загаданным, иначе возвращает false
 	public boolean check(String word){
-		currentRound++;
+		countOfTry--;
 		onPosition.clear();
 		if(targetWord.equals(word)){
 			return true;
@@ -78,15 +87,18 @@ public class WordleLogic{
 		return false;
 	}
 	
-	//запуск игры
-	public void start(){
-		currentRound = 1;
+	//загадать новое слово
+	public void start(int countOfTry){
+		this.countOfTry = countOfTry;
 		targetWord = randomWord();
+		used.clear();
+		notUsed.clear();
+		onPosition.clear();
 		//System.out.println("// "+view.menu());
 	}
 	
-	//выбор случайного слова для раунда
-	public String randomWord(){	// !!!
+	//выбор случайного слова из хранилища
+	public String randomWord(){
 		Random random =  new Random();
 		int index = random.nextInt(storage.getWordsCount());
 		return storage.getWordById(index);
