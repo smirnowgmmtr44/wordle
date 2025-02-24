@@ -51,9 +51,15 @@ public class ConsoleView{
 		System.out.println();
 	}
 	
+<<<<<<< HEAD
 	static void start(int rounds){
 		logic.start(rounds);
-		System.out.println("==="+logic.getTargetWord());
+		
+=======
+	static void start(int rounds){ //запуск игры
+		logic.start(rounds);
+		//System.out.println("==="+logic.getTargetWord());
+>>>>>>> 12851a7 (Логика вынеселна из класса ConsoleView в класс WorldeLogic)
 		String choice = "";
 		boolean win = false;
 		do{

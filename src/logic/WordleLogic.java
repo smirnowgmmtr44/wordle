@@ -48,9 +48,11 @@ public class WordleLogic{
 		return word.length() == 5 && matcher.find();
 	}
 	
-	//проверка существует ли в списке слово
+	//проверка существует ли в хранилище слово
 	public boolean isWordExist(String word){
-		//System.out.println(isWord(word));
+<<<<<<< HEAD
+=======
+>>>>>>> 12851a7 (Логика вынеселна из класса ConsoleView в класс WorldeLogic)
 		return isWord(word) &&  storage.search(word);
 	}
 	
@@ -94,7 +96,9 @@ public class WordleLogic{
 		used.clear();
 		notUsed.clear();
 		onPosition.clear();
-		//System.out.println("// "+view.menu());
+<<<<<<< HEAD
+=======
+>>>>>>> 12851a7 (Логика вынеселна из класса ConsoleView в класс WorldeLogic)
 	}
 	
 	//выбор случайного слова из хранилища
