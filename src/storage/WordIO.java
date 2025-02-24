@@ -11,7 +11,7 @@ public class WordIO implements WordIOInterface{
 		this.fileName = fileName;
 	}
 	
-	public boolean searchInFile(String word){
+	public boolean search(String word){
 		 try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
 			String s;
 			while((s=bw.readLine())!=null){
@@ -31,7 +31,7 @@ public class WordIO implements WordIOInterface{
 	}
 	
 	public boolean addWord(String word){
-		if(!searchInFile(word)){
+		if(!search(word)){
 			
 			try(FileWriter writer = new FileWriter(this.fileName, true)){
 				writer.write(word.toLowerCase()+"\n");
@@ -43,7 +43,7 @@ public class WordIO implements WordIOInterface{
 		}
 		return false;
 	}
-	public List<String> getWords(){
+	public List<String> getAllWords(){
 		List<String> words = new LinkedList<String>();
 		try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
 			String s;
@@ -78,10 +78,10 @@ public class WordIO implements WordIOInterface{
 		}
 		return count;
 	}
-	public String randomWord(){
-		Random random =  new Random();
-		int index = random.nextInt(getWordsCount());
-		System.out.println(index);
+	public String getWordById(int id){
+	//	Random random =  new Random();
+		//int index = random.nextInt(getWordsCount());
+	//	System.out.println(index);
 		int position = 0;
 		try(BufferedReader bw = new BufferedReader(new FileReader(this.fileName))){
 			String s;
@@ -90,7 +90,7 @@ public class WordIO implements WordIOInterface{
 				scanner.useDelimiter("\n\t,.;");
 				while(scanner.hasNext()){
 					String next = scanner.next();
-					if(index == position){
+					if(id == position){
 						return next;
 					}
 					position++;

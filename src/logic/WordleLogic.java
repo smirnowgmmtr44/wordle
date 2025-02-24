@@ -3,9 +3,12 @@ package out.logic;
 import java.util.*;
 import java.lang.*;
 import java.util.regex.*;
+import out.storage.WordIOInterface;
+import out.storage.WordIO;
 
 public class WordleLogic{
 	
+	WordIOInterface storage;
 	List<Character> used;
 	List<Character> notUsed;
 	List<Character> onPosition;
@@ -14,6 +17,7 @@ public class WordleLogic{
 	int currentRound;
 	
 	public WordleLogic(){
+		storage = new WordIO("dictionary.txt");	// !!!
 		used = new LinkedList<Character>();
 		notUsed = new LinkedList<Character>();
 		onPosition = new LinkedList<Character>();
@@ -82,8 +86,10 @@ public class WordleLogic{
 	}
 	
 	//выбор случайного слова для раунда
-	public String randomWord(){
-		return " ";
+	public String randomWord(){	// !!!
+		Random random =  new Random();
+		int index = random.nextInt(storage.getWordsCount());
+		return storage.getWordById(index);
 	}
 	
 }

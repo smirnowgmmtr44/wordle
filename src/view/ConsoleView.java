@@ -47,7 +47,7 @@ public class ConsoleView{
 					System.out.println("Type word:");
 					scanner = new Scanner(System.in);
 					word = scanner.next();
-					if(wordIO.searchInFile(word)){
+					if(wordIO.search(word)){
 						System.out.println("Word exist");
 					} else{
 						System.out.println("! Word not found");
@@ -124,7 +124,7 @@ public class ConsoleView{
 			Scanner scanner = new Scanner(System.in);
 			if(scanner.hasNext()){
 				choice = scanner.next();
-				if(!wordIO.searchInFile(choice)){
+				if(!wordIO.search(choice)){
 					System.out.println("This word dont exist");
 				} else {
 					if(check(choice,targetWord)){
