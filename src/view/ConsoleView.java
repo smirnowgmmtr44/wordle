@@ -84,24 +84,31 @@ public class ConsoleView{
 		String used="";
 		String notUsed="";
 		String onPosition="";
+		
 		if(targetWord.equals(word)){
 			return true;
 		} else{
 			
 			for(int i = 0;i < word.length();i++ ){
 				if(targetWord.indexOf(word.charAt(i))!=-1){
-					used += word.charAt(i);
-					if(word.charAt(i)==targetWord.charAt(i)){
+					
+					if(used.indexOf(word.charAt(i))==-1){ //добавление слова в список букв которые вхоядт в слово
+						used += word.charAt(i);	
+					}
+					
+					if(word.charAt(i)==targetWord.charAt(i)){ // добавление буквы на свою позицию или * если не совпадает
 						onPosition += word.charAt(i);
 					} else{
 						onPosition += "*";
 					}
+					
 				} else{
-					notUsed += word.charAt(i);
+					notUsed += word.charAt(i);// добавление отсутсвующей буквы  в список
 					onPosition += "*";
 				}
 			}
 		}
+		
 		System.out.println("Used letters: "+used);
 		System.out.println("Not used letters: "+notUsed);
 		System.out.println("Letters in right position: "+onPosition);

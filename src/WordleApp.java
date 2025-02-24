@@ -8,7 +8,6 @@ public class WordleApp{
 	}
 	static void start(){
 		ConsoleView view = new ConsoleView();
-		//System.out.println(view.menu());
 		view.menu();
 	}
 }
