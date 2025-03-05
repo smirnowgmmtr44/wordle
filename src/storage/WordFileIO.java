@@ -8,7 +8,7 @@ public class WordFileIO implements WordIOInterface{
 	String fileName;
 	
 	public WordFileIO(){
-		this.fileName = "wordle.txt";
+		this.fileName = "resources/wordle.txt";
 	}
 	
 	public WordFileIO(String fileName){
