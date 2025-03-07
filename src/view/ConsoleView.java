@@ -4,10 +4,7 @@ import java.util.*;
 import logic.WordleLogic;
 
 public class ConsoleView{
-	static WordleLogic logic;
-	static{
-		logic = new WordleLogic();
-	}
+	
 	public void menu(){
 		int choice = 0;
 		try(Scanner scanner = new Scanner(System.in)){
@@ -60,6 +57,7 @@ public class ConsoleView{
 
 
 	static void start(Scanner scanner,int rounds){ 
+		WordleLogic logic = new WordleLogic();
 		logic.start(rounds);
 		String choice;
 		do{
