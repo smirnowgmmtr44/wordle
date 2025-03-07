@@ -62,7 +62,6 @@ public class ConsoleView{
 	static void start(int rounds){ 
 		logic.start(rounds);
 		String choice;
-		boolean win = false;
 		do{
 			System.out.println("---------");
 			System.out.println("Аttempts left: "+logic.getCountOfTry());
@@ -76,7 +75,8 @@ public class ConsoleView{
 					System.out.println("The word consists of 5 Latin letters!!!");
 				} else {
 					if(logic.check(choice)){
-						win = true;
+						System.out.println("---------");
+						System.out.println("!!! Сongratulations you won !!!");
 						break;
 					} else {
 						System.out.print("Character already in position in word: ");
@@ -91,13 +91,7 @@ public class ConsoleView{
 			}
 			
 		}while(logic.getCountOfTry() != 0);
-		if(win){
-			System.out.println("---------");
-			System.out.println("!!! Congratulations !!!");
-			
-		} else {
-			System.out.println("!!! GAME OVER !!!");
-		}
+		System.out.println("!!! GAME OVER !!!");
 		System.out.println("Target word is: "+logic.getTargetWord());
 		System.out.println("---------");
 	}
