@@ -14,16 +14,17 @@ public class WordleLogic{
 	List<Character> onPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове
 	String targetWord;				
 	int countOfTry;				
-	Pattern pattern;				
+	private final int wordLength = 5;
+	private final Pattern pattern = Pattern.compile("[a-zA-Z]{"+wordLength+"}", Pattern.CASE_INSENSITIVE);	
 	
 	public WordleLogic(){
-		countOfTry = 0;
+		//countOfTry = 0;
 		storage = new WordFileIO();
 		used = new LinkedList<Character>();
 		notUsed = new LinkedList<Character>();
 		onPosition = new LinkedList<Character>();
-		targetWord = "";
-		pattern = Pattern.compile("[a-zA-Z]{5}", Pattern.CASE_INSENSITIVE);
+		//targetWord = "";
+		//pattern = Pattern.compile("[a-zA-Z]{"+wordLength+"}", Pattern.CASE_INSENSITIVE);
 	}
 	
 	public List<Character> getUsed(){
@@ -44,8 +45,7 @@ public class WordleLogic{
 	
 	//проверка на слово из 5 латинских букв
 	public boolean isWord(String word){
-		Matcher matcher = pattern.matcher(word);
-		return word.length() == 5 && matcher.find();
+		return word.length() == wordLength && pattern.matcher(word).find();
 	}
 	
 	//проверка существует ли в хранилище слово
