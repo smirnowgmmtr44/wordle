@@ -61,7 +61,7 @@ public class ConsoleView{
 
 	static void start(int rounds){ 
 		logic.start(rounds);
-		String choice = "";
+		String choice;
 		boolean win = false;
 		do{
 			System.out.println("---------");
