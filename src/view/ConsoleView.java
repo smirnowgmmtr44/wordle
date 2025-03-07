@@ -10,32 +10,32 @@ public class ConsoleView{
 	}
 	public void menu(){
 		int choice = 0;
-		String word="";
-		
-		do{
-			menuText();
-			Scanner scanner = new Scanner(System.in);
-			if(scanner.hasNext()){
-				try{
-					choice = scanner.nextInt();
-				} catch(InputMismatchException e) {
-					choice = -1;
+		try(Scanner scanner = new Scanner(System.in)){
+			do{
+				menuText();
+				if(scanner.hasNext()){
+					try{
+						choice = Integer.parseInt(scanner.next());
+					} catch(NumberFormatException e) {
+						choice = -1;
+					}
 				}
-			}
-			switch(choice){
-				case 0:
-					System.out.println("Exiting...");
-					System.out.println();
-					break;
-				case 1:	
-					System.out.println("Start game!");
-					start(5);
-					break;
-				default:
-					System.out.println("Type number 0-1");
-					break;
-			}
-		}while(choice != 0);
+				switch(choice){
+					case 0:
+						System.out.println("Exiting...");
+						System.out.println();
+						break;
+					case 1:	
+						System.out.println("Start game!");
+						start(5);
+						break;
+					default:
+						System.out.println("Type number 0-1");
+						break;
+				}
+			}while(choice != 0);
+		}
+		
 	}
 	
 	private void menuText(){
