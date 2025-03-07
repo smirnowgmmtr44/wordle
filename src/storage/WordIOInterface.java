@@ -1,7 +1,5 @@
 package storage;
 
-import java.util.*;
-
 public interface WordIOInterface{
 	
 	/**

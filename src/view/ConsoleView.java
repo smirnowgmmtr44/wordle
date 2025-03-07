@@ -1,6 +1,8 @@
 package view;
 
-import java.util.*;
+import java.util.Scanner;
+import java.util.List;
+import java.util.LinkedList;
 import logic.WordleLogic;
 
 public class ConsoleView{
@@ -39,12 +41,6 @@ public class ConsoleView{
 		System.out.println("Main menu:");
 		System.out.println("0.	Exit");
 		System.out.println("1.	Play Wordle");
-	}
-	
-	static void printWords(List<String> words){
-		for(String w : words){
-			System.out.println("\t"+w);
-		}
 	}
 	
 	static void printList(List<Character> list){

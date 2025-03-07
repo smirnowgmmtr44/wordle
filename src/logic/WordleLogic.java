@@ -1,8 +1,7 @@
 package logic;
 
 import java.util.*;
-import java.lang.*;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 import storage.WordIOInterface;
 import storage.WordFileIO;
 
