@@ -53,8 +53,7 @@ public class ConsoleView{
 
 
 	static void start(Scanner scanner,int rounds){ 
-		WordleLogic logic = new WordleLogic();
-		logic.start(rounds);
+		WordleLogic logic = new WordleLogic(rounds);
 		String choice;
 		do{
 			System.out.println("---------");
