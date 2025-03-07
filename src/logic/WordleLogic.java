@@ -59,28 +59,26 @@ public class WordleLogic{
 		onPosition.clear();
 		if(targetWord.equals(word)){
 			return true;
-		} else{
-			
-			for(int i = 0;i < word.length();i++ ){
-				if(targetWord.indexOf(word.charAt(i))!=-1){
-					
-					if(used.indexOf(word.charAt(i))==-1){
-						used.add(word.charAt(i));	
-					}
-					
-					if(word.charAt(i)==targetWord.charAt(i)){
-						onPosition.add(word.charAt(i));
-					} else{
-						onPosition.add('*');
-					}
-					
+		} 
+		for(int i = 0;i < word.length();i++ ){
+			if(targetWord.indexOf(word.charAt(i))!=-1){
+				
+				if(used.indexOf(word.charAt(i))==-1){
+					used.add(word.charAt(i));	
+				}
+				
+				if(word.charAt(i)==targetWord.charAt(i)){
+					onPosition.add(word.charAt(i));
 				} else{
-					
-					if(notUsed.indexOf(word.charAt(i))==-1){
-						notUsed.add(word.charAt(i));
-					}	
 					onPosition.add('*');
 				}
+				
+			} else{
+				
+				if(notUsed.indexOf(word.charAt(i))==-1){
+					notUsed.add(word.charAt(i));
+				}	
+				onPosition.add('*');
 			}
 		}
 		return false;
