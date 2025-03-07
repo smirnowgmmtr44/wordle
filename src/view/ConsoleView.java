@@ -27,7 +27,7 @@ public class ConsoleView{
 						break;
 					case 1:	
 						System.out.println("Start game!");
-						start(5);
+						start(scanner,5);
 						break;
 					default:
 						System.out.println("Type number 0-1");
@@ -59,7 +59,7 @@ public class ConsoleView{
 	
 
 
-	static void start(int rounds){ 
+	static void start(Scanner scanner,int rounds){ 
 		logic.start(rounds);
 		String choice;
 		do{
@@ -67,7 +67,6 @@ public class ConsoleView{
 			System.out.println("Аttempts left: "+logic.getCountOfTry());
 			System.out.println("---------");
 			System.out.println("Try to guess the word:");
-			Scanner scanner = new Scanner(System.in);
 			if(scanner.hasNext()){
 				choice = scanner.next().toLowerCase();
 				if(!logic.isWordExist(choice)){
@@ -91,6 +90,7 @@ public class ConsoleView{
 			}
 			
 		}while(logic.getCountOfTry() != 0);
+		
 		System.out.println("!!! GAME OVER !!!");
 		System.out.println("Target word is: "+logic.getTargetWord());
 		System.out.println("---------");
