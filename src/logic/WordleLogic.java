@@ -89,17 +89,10 @@ public class WordleLogic{
 	//загадать новое слово
 	public void start(int countOfTry){
 		this.countOfTry = countOfTry;
-		targetWord = randomWord();
+		targetWord = storage.getRandomWord();
 		used.clear();
 		notUsed.clear();
 		onPosition.clear();
-	}
-	
-	//выбор случайного слова из хранилища
-	public String randomWord(){
-		Random random =  new Random();
-		int index = random.nextInt(storage.getWordsCount());
-		return storage.getWordById(index);
 	}
 	
 }
