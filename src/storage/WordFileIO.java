@@ -1,4 +1,4 @@
-package out.storage;
+package storage;
 
 import java.io.*;
 import java.util.*;

@@ -1,7 +1,7 @@
-package out.view;
+package view;
 
 import java.util.*;
-import out.logic.WordleLogic;
+import logic.WordleLogic;
 
 public class ConsoleView{
 	static WordleLogic logic;

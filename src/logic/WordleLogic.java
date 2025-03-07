@@ -1,10 +1,10 @@
-package out.logic;
+package logic;
 
 import java.util.*;
 import java.lang.*;
 import java.util.regex.*;
-import out.storage.WordIOInterface;
-import out.storage.WordFileIO;
+import storage.WordIOInterface;
+import storage.WordFileIO;
 
 public class WordleLogic{
 	

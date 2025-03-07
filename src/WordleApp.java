@@ -1,6 +1,4 @@
-package out;
-
-import out.view.*;
+import view.*;
 
 public class WordleApp{
 	public static void main(String args[]){
