@@ -13,16 +13,16 @@ public class WordleLogic{
 	private List<Character> onPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове			
 	private int countOfTry = 6;		
 
-	private final String TARGET_WORD;		
-	private final int WORD_LENGTH = 5;
-	private final Pattern PATTERN = Pattern.compile("[a-zA-Z]{"+WORD_LENGTH+"}", Pattern.CASE_INSENSITIVE);	
+	private final String targetWord;		
+	private final int worldLength = 5;
+	private final Pattern pattern = Pattern.compile("[a-zA-Z]{"+worldLength+"}", Pattern.CASE_INSENSITIVE);	
 	
 	public WordleLogic(){
 		storage = new WordFileIO();
 		used = new LinkedList<Character>();
 		notUsed = new LinkedList<Character>();
 		onPosition = new LinkedList<Character>();
-		TARGET_WORD = storage.getRandomWord();
+		targetWord = storage.getRandomWord();
 	}
 	public WordleLogic(int rounds){
 		this();
@@ -42,12 +42,12 @@ public class WordleLogic{
 		return countOfTry;
 	}
 	public String getTargetWord(){
-		return TARGET_WORD;
+		return targetWord;
 	}
 	
 	//проверка на слово из 5 латинских букв
 	public boolean isWord(String word){
-		return word.length() == WORD_LENGTH && PATTERN.matcher(word).find();
+		return word.length() == worldLength && pattern.matcher(word).find();
 	}
 	
 	//проверка существует ли в хранилище слово
@@ -59,17 +59,17 @@ public class WordleLogic{
 	public boolean check(String word){
 		countOfTry--;
 		onPosition.clear();
-		if(TARGET_WORD.equals(word)){
+		if(targetWord.equals(word)){
 			return true;
 		} 
 		for(int i = 0;i < word.length();i++ ){
-			if(TARGET_WORD.indexOf(word.charAt(i))!=-1){
+			if(targetWord.indexOf(word.charAt(i))!=-1){
 				
 				if(used.indexOf(word.charAt(i))==-1){
 					used.add(word.charAt(i));	
 				}
 				
-				if(word.charAt(i)==TARGET_WORD.charAt(i)){
+				if(word.charAt(i)==targetWord.charAt(i)){
 					onPosition.add(word.charAt(i));
 				} else{
 					onPosition.add('*');
