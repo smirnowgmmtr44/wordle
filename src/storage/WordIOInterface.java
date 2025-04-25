@@ -7,11 +7,6 @@ public interface WordIOInterface{
 	* возвращает true если слово найдено, и false если не найдено
 	*/
 	public boolean search(String word);
-
-	/**
-	* Этот метод возвращает количество слов в хранилище
-	*/
-	public int getWordsCount();
 	
 	/**
 	* Этот метод возвращает слово из хранилища по его id

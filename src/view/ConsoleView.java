@@ -4,8 +4,25 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.LinkedList;
 import logic.WordleLogic;
+import logic.Letter;
+import logic.LetterStatus;
 
 public class ConsoleView{
+	
+	private List<Character> used;			//коллекция букв которые используюся в загаданом слове
+	private List<Character> notUsed;		//коллекция букв которые не используются в загаданом слове 
+	private List<Character> inPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове		
+	
+	public ConsoleView(){
+		used = new LinkedList<Character>();
+		notUsed = new LinkedList<Character>();
+		inPosition = new LinkedList<Character>();
+	}
+	private void listsClear(){
+		used.clear();
+		notUsed.clear();
+		inPosition.clear();
+	}
 	
 	public void menu(){
 		int choice = 0;
@@ -26,6 +43,7 @@ public class ConsoleView{
 						break;
 					case 1:	
 						System.out.println("Start game!");
+						listsClear();
 						start(scanner,5);
 						break;
 					default:
@@ -52,32 +70,41 @@ public class ConsoleView{
 	
 
 
-	static void start(Scanner scanner,int rounds){ 
+	void start(Scanner scanner,int rounds){ 
 		WordleLogic logic = new WordleLogic(rounds);
 		String choice;
 		do{
+			inPosition.clear();
 			System.out.println("---------");
 			System.out.println("Аttempts left: "+logic.getCountOfTry());
 			System.out.println("---------");
 			System.out.println("Try to guess the word:");
 			if(scanner.hasNext()){
 				choice = scanner.next().toLowerCase();
-				if(!logic.isWordExist(choice)){
+				if(logic.isWordNotExist(choice)){ 
 					System.out.println("This word dont exist");
 					System.out.println("The word consists of 5 Latin letters!!!");
 				} else {
-					if(logic.check(choice)){
-						System.out.println("---------");
-						System.out.println("!!! Сongratulations you won !!!");
-						break;
-					} else {
-						System.out.print("Character already in position in word: ");
-						printList(logic.getOnPosition());
-						System.out.print("Character used in word: ");
-						printList(logic.getUsed());
-						System.out.print("Character not used in word: ");
-						printList(logic.getNotUsed());
+					
+					for(Letter l : logic.check(choice)){
+						if(l.getStatus() == LetterStatus.INPOSITION){
+							inPosition.add(l.getLetter());
+						} else {
+							inPosition.add('_');
+						}
+						if(l.getStatus() == LetterStatus.USED && used.indexOf(l.getLetter())==-1){
+							used.add(l.getLetter());
+						}
+						if(l.getStatus() == LetterStatus.NOTUSED && notUsed.indexOf(l.getLetter())==-1){
+							notUsed.add(l.getLetter());
+						}
 					}
+					System.out.print("Character already in position in word: ");
+					printList(inPosition);
+					System.out.print("Character used in word: ");
+					printList(used);
+					System.out.print("Character not used in word: ");
+					printList(notUsed);
 				}
 				System.out.println("---------");
 			}

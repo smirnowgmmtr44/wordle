@@ -7,10 +7,7 @@ import storage.WordFileIO;
 
 public class WordleLogic{
 	
-	private WordIOInterface storage;
-	private List<Character> used;			//коллекция букв которые используюся в загаданом слове
-	private List<Character> notUsed;		//коллекция букв которые не используются в загаданом слове 
-	private List<Character> onPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове			
+	private WordIOInterface storage;	
 	private int countOfTry = 6;		
 
 	private final String targetWord;		
@@ -19,9 +16,6 @@ public class WordleLogic{
 	
 	public WordleLogic(){
 		storage = new WordFileIO();
-		used = new LinkedList<Character>();
-		notUsed = new LinkedList<Character>();
-		onPosition = new LinkedList<Character>();
 		targetWord = storage.getRandomWord();
 	}
 	public WordleLogic(int rounds){
@@ -29,15 +23,6 @@ public class WordleLogic{
 		countOfTry = rounds;
 	}
 	
-	public List<Character> getUsed(){
-		return used;
-	}
-	public List<Character> getNotUsed(){
-		return notUsed;
-	}
-	public List<Character> getOnPosition(){
-		return onPosition;
-	}
 	public int getCountOfTry(){
 		return countOfTry;
 	}
@@ -55,35 +40,33 @@ public class WordleLogic{
 		return isWord(word) &&  storage.search(word);
 	}
 	
+	public boolean isWordNotExist(String word){
+		return !isWordExist(word);
+	}
+	
 	//	Метод возвращает true если слово совпадает с загаданным, иначе возвращает false
-	public boolean check(String word){
+	public List<Letter> check(String word){
 		countOfTry--;
-		onPosition.clear();
+		Word result = new Word();
 		if(targetWord.equals(word)){
-			return true;
+			return new Word(word,LetterStatus.INPOSITION).getLetters();
 		} 
 		for(int i = 0;i < word.length();i++ ){
 			if(targetWord.indexOf(word.charAt(i))!=-1){
 				
-				if(used.indexOf(word.charAt(i))==-1){
-					used.add(word.charAt(i));	
-				}
-				
 				if(word.charAt(i)==targetWord.charAt(i)){
-					onPosition.add(word.charAt(i));
-				} else{
-					onPosition.add('*');
+					result.add(new Letter(word.charAt(i),LetterStatus.INPOSITION));
+				} else {
+					result.add(new Letter(word.charAt(i),LetterStatus.USED));
 				}
 				
 			} else{
 				
-				if(notUsed.indexOf(word.charAt(i))==-1){
-					notUsed.add(word.charAt(i));
-				}	
-				onPosition.add('*');
+				result.add(new Letter(word.charAt(i),LetterStatus.NOTUSED));
+				
 			}
 		}
-		return false;
+		return result.getLetters();
 	}
 	
 }

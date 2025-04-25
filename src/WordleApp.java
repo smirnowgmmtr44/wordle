@@ -5,7 +5,11 @@ public class WordleApp{
 		start();
 	}
 	static void start(){
-		ConsoleView view = new ConsoleView();
-		view.menu();
+		try{
+			ConsoleView view = new ConsoleView();
+			view.menu();
+		} catch(Exception e){
+			System.out.println("Something went wrong...");
+		}
 	}
 }
