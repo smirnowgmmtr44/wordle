@@ -2,8 +2,8 @@ package logic;
 
 public class Letter{
 	
-	LetterStatus status;
-	char letter;
+	private LetterStatus status;
+	private char letter;
 	
 	public Letter(char letter ,LetterStatus status){
 		this.letter = letter;
@@ -11,7 +11,7 @@ public class Letter{
 	}
 	public Letter(char letter){
 		this.letter = letter;
-		this.status = LetterStatus.NOTUSED;
+		this.status = LetterStatus.NOT_USED;
 	}
 	
 	public LetterStatus getStatus(){

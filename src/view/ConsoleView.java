@@ -12,6 +12,7 @@ public class ConsoleView{
 	private List<Character> used;			//коллекция букв которые используюся в загаданом слове
 	private List<Character> notUsed;		//коллекция букв которые не используются в загаданом слове 
 	private List<Character> inPosition;		//коллекция которая указывает позицию верно расположенных букв в загаданом слове		
+	private static final int ROUNDS = 5;
 	
 	public ConsoleView(){
 		used = new LinkedList<Character>();
@@ -44,7 +45,7 @@ public class ConsoleView{
 					case 1:	
 						System.out.println("Start game!");
 						listsClear();
-						start(scanner,5);
+						start(scanner,ROUNDS);
 						break;
 					default:
 						System.out.println("Type number 0-1");
@@ -86,8 +87,8 @@ public class ConsoleView{
 					System.out.println("The word consists of 5 Latin letters!!!");
 				} else {
 					
-					for(Letter l : logic.check(choice)){
-						if(l.getStatus() == LetterStatus.INPOSITION){
+					for(Letter l : logic.wordAnalysis(choice)){
+						if(l.getStatus() == LetterStatus.IN_POSITION){
 							inPosition.add(l.getLetter());
 						} else {
 							inPosition.add('_');
@@ -95,7 +96,7 @@ public class ConsoleView{
 						if(l.getStatus() == LetterStatus.USED && used.indexOf(l.getLetter())==-1){
 							used.add(l.getLetter());
 						}
-						if(l.getStatus() == LetterStatus.NOTUSED && notUsed.indexOf(l.getLetter())==-1){
+						if(l.getStatus() == LetterStatus.NOT_USED && notUsed.indexOf(l.getLetter())==-1){
 							notUsed.add(l.getLetter());
 						}
 					}
@@ -109,7 +110,7 @@ public class ConsoleView{
 				System.out.println("---------");
 			}
 			
-		}while(logic.getCountOfTry() != 0);
+		}while(logic.isGameActive());
 		
 		System.out.println("!!! GAME OVER !!!");
 		System.out.println("Target word is: "+logic.getTargetWord());

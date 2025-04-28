@@ -5,17 +5,24 @@ import java.util.ArrayList;
 
 public class Word{
 	
-	List<Letter> letters;
-	
-	public Word(String word,LetterStatus status){
-		this();
-		for(char c : word.toCharArray()){
-			letters.add(new Letter(c,status));
-		}
-	}
+	private List<Letter> letters;
 	
 	public Word(){
 		letters = new ArrayList<>();
+	}
+	/**
+	* Возващает слово у которого все буквы в определенном статусе
+	*
+	* @param word Слово
+	* @param status Статус который будет указан у всех букв в слове
+	* @return Возвращает список букв в определенном статусе
+	*/
+	public static List<Letter> GetWordWithAllLettersInStatus(String word, LetterStatus status){
+		List<Letter> letters = new ArrayList<>();
+		for(char c : word.toCharArray()){
+			letters.add(new Letter(c,status));
+		}
+		return letters;
 	}
 	
 	public void add(Letter letter){

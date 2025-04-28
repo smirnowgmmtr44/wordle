@@ -30,12 +30,16 @@ public class WordleLogic{
 		return targetWord;
 	}
 	
-	//проверка на слово из 5 латинских букв
+	/**
+	* Метод для проверки на слово из 5 латинских букв
+	*/
 	public boolean isWord(String word){
 		return word.length() == worldLength && pattern.matcher(word).find();
 	}
 	
-	//проверка существует ли в хранилище слово
+	/**
+	* Метод для проверки существует ли в хранилище слово
+	*/
 	public boolean isWordExist(String word){
 		return isWord(word) &&  storage.search(word);
 	}
@@ -44,29 +48,38 @@ public class WordleLogic{
 		return !isWordExist(word);
 	}
 	
-	//	Метод возвращает true если слово совпадает с загаданным, иначе возвращает false
-	public List<Letter> check(String word){
+	/**	
+	* Метод для анализа букв в слове
+	*
+	* @param word Введенное пользователем слово 
+	* @return Метод возвращает true если слово совпадает с загаданным, иначе возвращает false
+	*/
+	public List<Letter> wordAnalysis(String word){
 		countOfTry--;
 		Word result = new Word();
 		if(targetWord.equals(word)){
-			return new Word(word,LetterStatus.INPOSITION).getLetters();
+			return  Word.GetWordWithAllLettersInStatus(word,LetterStatus.IN_POSITION);
 		} 
 		for(int i = 0;i < word.length();i++ ){
 			if(targetWord.indexOf(word.charAt(i))!=-1){
 				
 				if(word.charAt(i)==targetWord.charAt(i)){
-					result.add(new Letter(word.charAt(i),LetterStatus.INPOSITION));
+					result.add(new Letter(word.charAt(i),LetterStatus.IN_POSITION));
 				} else {
 					result.add(new Letter(word.charAt(i),LetterStatus.USED));
 				}
 				
 			} else{
 				
-				result.add(new Letter(word.charAt(i),LetterStatus.NOTUSED));
+				result.add(new Letter(word.charAt(i),LetterStatus.NOT_USED));
 				
 			}
 		}
 		return result.getLetters();
+	}
+	
+	public boolean isGameActive(){
+		return countOfTry != 0;
 	}
 	
 }

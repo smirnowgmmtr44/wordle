@@ -1,7 +1,7 @@
 package logic;
 
 public enum LetterStatus{
-	INPOSITION,
+	IN_POSITION,
 	USED,
-	NOTUSED
+	NOT_USED
 }
