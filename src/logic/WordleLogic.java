@@ -7,12 +7,12 @@ import storage.WordFileIO;
 
 public class WordleLogic{
 	
-	private WordIOInterface storage;	
+	private final WordIOInterface storage;	
 	private int countOfTry = 6;		
 
 	private final String targetWord;		
-	private final int worldLength = 5;
-	private final Pattern pattern = Pattern.compile("[a-zA-Z]{"+worldLength+"}", Pattern.CASE_INSENSITIVE);	
+	private final static int WORLD_LENGTH = 5;
+	private final Pattern pattern = Pattern.compile("[a-zA-Z]{"+WORLD_LENGTH+"}", Pattern.CASE_INSENSITIVE);	
 	
 	public WordleLogic(){
 		storage = new WordFileIO();
@@ -34,7 +34,7 @@ public class WordleLogic{
 	* Метод для проверки на слово из 5 латинских букв
 	*/
 	public boolean isWord(String word){
-		return word.length() == worldLength && pattern.matcher(word).find();
+		return word.length() == WORLD_LENGTH && pattern.matcher(word).find();
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class WordleLogic{
 		countOfTry--;
 		Word result = new Word();
 		if(targetWord.equals(word)){
-			return  Word.GetWordWithAllLettersInStatus(word,LetterStatus.IN_POSITION);
+			return  Word.getWordWithAllLettersInStatus(word,LetterStatus.IN_POSITION);
 		} 
 		for(int i = 0;i < word.length();i++ ){
 			if(targetWord.indexOf(word.charAt(i))!=-1){

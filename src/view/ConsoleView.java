@@ -68,8 +68,6 @@ public class ConsoleView{
 		}
 		System.out.println();
 	}
-	
-
 
 	void start(Scanner scanner,int rounds){ 
 		WordleLogic logic = new WordleLogic(rounds);
@@ -88,15 +86,15 @@ public class ConsoleView{
 				} else {
 					
 					for(Letter l : logic.wordAnalysis(choice)){
-						if(l.getStatus() == LetterStatus.IN_POSITION){
+						if(LetterStatus.IN_POSITION.equals(l.getStatus())){
 							inPosition.add(l.getLetter());
 						} else {
 							inPosition.add('_');
 						}
-						if(l.getStatus() == LetterStatus.USED && used.indexOf(l.getLetter())==-1){
+						if(LetterStatus.USED.equals(l.getStatus()) && used.indexOf(l.getLetter())==-1){
 							used.add(l.getLetter());
 						}
-						if(l.getStatus() == LetterStatus.NOT_USED && notUsed.indexOf(l.getLetter())==-1){
+						if(LetterStatus.NOT_USED.equals(l.getStatus()) && notUsed.indexOf(l.getLetter())==-1){
 							notUsed.add(l.getLetter());
 						}
 					}

@@ -2,8 +2,8 @@ package logic;
 
 public class Letter{
 	
-	private LetterStatus status;
-	private char letter;
+	private final LetterStatus status;
+	private final char letter;
 	
 	public Letter(char letter ,LetterStatus status){
 		this.letter = letter;

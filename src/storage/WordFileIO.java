@@ -7,13 +7,15 @@ import java.util.Random;
 
 public class WordFileIO implements WordIOInterface{
 	
-	String fileName;
+	private final String fileName;
+	private final Random random;
 	
 	public WordFileIO(){
-		this.fileName = "resources/wordle.txt";
+		this("resources/wordle.txt");
 	}
 	
 	public WordFileIO(String fileName){
+		this.random = new Random();
 		this.fileName = fileName;
 	}
 	
@@ -64,7 +66,6 @@ public class WordFileIO implements WordIOInterface{
 	}
 	
 	public String getRandomWord(){
-		Random random =  new Random();
 		int index = random.nextInt(getWordsCount());
 		return getWordById(index);
 	}

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Word{
 	
-	private List<Letter> letters;
+	private final List<Letter> letters;
 	
 	public Word(){
 		letters = new ArrayList<>();
@@ -17,7 +17,7 @@ public class Word{
 	* @param status Статус который будет указан у всех букв в слове
 	* @return Возвращает список букв в определенном статусе
 	*/
-	public static List<Letter> GetWordWithAllLettersInStatus(String word, LetterStatus status){
+	public static List<Letter> getWordWithAllLettersInStatus(String word, LetterStatus status){
 		List<Letter> letters = new ArrayList<>();
 		for(char c : word.toCharArray()){
 			letters.add(new Letter(c,status));
