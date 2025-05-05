@@ -19,7 +19,7 @@ public class WordFileIO implements WordIOInterface {
         this.fileName = fileName;
     }
 
-    public boolean search(String word) {
+    public boolean search(String word) throws IOException {
         try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
             String line;
             while ((line = bw.readLine()) != null) {
@@ -27,13 +27,12 @@ public class WordFileIO implements WordIOInterface {
                     return true;
                 }
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new IOException();
         }
-        return false;
+
     }
 
-    public int getWordsCount() {
+    public int getWordsCount() throws IOException {
         int count = 0;
         try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
             String line;
@@ -41,12 +40,12 @@ public class WordFileIO implements WordIOInterface {
                 count++;
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new IOException("Can't get word count");
         }
         return count;
     }
 
-    public String getWordById(int id) {
+    public String getWordById(int id) throws IOException {
         int position = 0;
         try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
             String line;
@@ -56,13 +55,11 @@ public class WordFileIO implements WordIOInterface {
                 }
                 position++;
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new IOException("Can't get word from storage");
         }
-        return "";
     }
 
-    public String getRandomWord() {
+    public String getRandomWord() throws IOException {
         int index = random.nextInt(getWordsCount());
         return getWordById(index);
     }

@@ -1,5 +1,6 @@
 package logic;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -17,14 +18,18 @@ public class WordleLogic {
     private final Pattern pattern = Pattern.compile("[a-zA-Z]{" + WORLD_LENGTH + "}", Pattern.CASE_INSENSITIVE);
     private final static int DEFAULT_COUNT_OF_TRY = 6;
 
-    public WordleLogic() {
+    public WordleLogic() throws StartGameException {
         this(DEFAULT_COUNT_OF_TRY);
     }
 
-    public WordleLogic(int rounds) {
-        storage = new WordFileIO();
-        targetWord = storage.getRandomWord();
-        countOfTry = rounds;
+    public WordleLogic(int rounds) throws StartGameException {
+        try {
+            storage = new WordFileIO();
+            targetWord = storage.getRandomWord();
+            countOfTry = rounds;
+        } catch (IOException e) {
+            throw new StartGameException();
+        }
     }
 
     public int getCountOfTry() {
@@ -47,17 +52,26 @@ public class WordleLogic {
      * Метод для проверки на слово из 5 латинских букв
      */
     public boolean isWord(String word) {
-        return word.length() == WORLD_LENGTH && pattern.matcher(word).find();
+        boolean result = word.length() == WORLD_LENGTH && pattern.matcher(word).find();
+        if (!result) {
+            throw new WordNotMatchPattern("The word consists of 5 Latin letters");
+        }
+        return result;
     }
 
     /**
      * Метод для проверки существует ли в хранилище слово
      */
-    public boolean isWordExist(String word) {
-        return isWord(word) && storage.search(word);
+    public boolean isWordExist(String word) throws WordNotFoundException, WordNotMatchPattern {
+        try {
+
+            return isWord(word) && storage.search(word);
+        } catch (IOException e) {
+            throw new WordNotFoundException("Word not exist in dictionary");
+        }
     }
 
-    public boolean isWordNotExist(String word) {
+    public boolean isWordNotExist(String word) throws WordNotFoundException, WordNotMatchPattern {
         return !isWordExist(word);
     }
 

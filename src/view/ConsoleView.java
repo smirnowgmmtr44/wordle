@@ -5,10 +5,7 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.LinkedList;
 
-import logic.WordleLogic;
-import logic.Letter;
-import logic.Word;
-import logic.LetterStatus;
+import logic.*;
 
 import org.fusesource.jansi.AnsiConsole;
 
@@ -85,9 +82,9 @@ public class ConsoleView {
 
     void printAttempts(List<Word> list) {
         //System.out.println(ansi().eraseScreen());
-        System.out.print("Used letters: \u001B[33m");
+        System.out.print("Used letters: " + Colors.YELLOW.getCode());
         printList(used);
-        System.out.print("\u001B[0m");
+        System.out.print(Colors.WHITE.getCode());
         System.out.print("Not used letters: ");
         printList(notUsed);
         System.out.println("-----");
@@ -95,10 +92,10 @@ public class ConsoleView {
             for (Letter l : word.getLetters()) {
                 switch (l.getStatus()) {
                     case LetterStatus.IN_POSITION:
-                        System.out.print("\u001B[32m[" + l.getLetter() + "]\u001B[0m");
+                        System.out.print(Colors.GREEN.getCode() + "[" + l.getLetter() + "]" + Colors.WHITE.getCode());
                         break;
                     case LetterStatus.USED:
-                        System.out.print("\u001B[33m[" + l.getLetter() + "]\u001B[0m");
+                        System.out.print(Colors.YELLOW.getCode() + "[" + l.getLetter() + "]" + Colors.WHITE.getCode());
                         break;
                     case LetterStatus.NOT_USED:
                         System.out.print("[" + l.getLetter() + "]");
@@ -113,54 +110,63 @@ public class ConsoleView {
         System.out.println("-----");
     }
 
+    private void printErrorMessage(String message) {
+        System.out.print(Colors.RED.getCode());
+        System.out.println(message);
+        System.out.print(Colors.WHITE.getCode());
+    }
+
+    private void letterAnalysis(List<Letter> letters) {
+        for (Letter l : letters) {
+            if (LetterStatus.IN_POSITION.equals(l.getStatus())) {
+                inPosition.add(l.getLetter());
+            } else {
+                inPosition.add('_');
+            }
+            if ((LetterStatus.IN_POSITION.equals(l.getStatus()) || LetterStatus.USED.equals(l.getStatus())) && used.indexOf(l.getLetter()) == -1) {
+                used.add(l.getLetter());
+            }
+            if (LetterStatus.NOT_USED.equals(l.getStatus()) && notUsed.indexOf(l.getLetter()) == -1) {
+                notUsed.add(l.getLetter());
+            }
+        }
+    }
+
     void start(Scanner scanner, int rounds) {
-        WordleLogic logic = new WordleLogic(rounds);
-        String choice;
-        System.out.println(ansi().eraseScreen());
-        System.out.println("Target word is: " + logic.getTargetWord());
-        do {
-            inPosition.clear();
-            System.out.println("Attempts: " + logic.getAttemptsLeft() + "/" + logic.getCountOfTry());
-            System.out.println("Try to guess the word:");
+        try {
+            WordleLogic logic = new WordleLogic(rounds);
+            String choice;
+            System.out.println(ansi().eraseScreen());
+            do {
+                inPosition.clear();
+                System.out.println("Attempts: " + logic.getAttemptsLeft() + "/" + logic.getCountOfTry());
+                System.out.println("Try to guess the word:");
 
-            if (scanner.hasNext()) {
-                choice = scanner.next().toLowerCase();
-                System.out.println(ansi().eraseScreen());
-                if (logic.isWordNotExist(choice)) {
-                    System.out.print("\u001B[31m");
-                    System.out.println("This word dont exist");
-                    System.out.println("The word consists of 5 Latin letters!!!");
-                    System.out.print("\u001B[0m");
-                } else {
-
-                    for (Letter l : logic.wordAnalysis(choice)) {
-                        if (LetterStatus.IN_POSITION.equals(l.getStatus())) {
-                            inPosition.add(l.getLetter());
-                        } else {
-                            inPosition.add('_');
+                if (scanner.hasNext()) {
+                    choice = scanner.next().toLowerCase();
+                    System.out.println(ansi().eraseScreen());
+                    try {
+                        if (logic.isWordExist(choice)) {
+                            letterAnalysis(logic.wordAnalysis(choice));
                         }
-                        if ((LetterStatus.IN_POSITION.equals(l.getStatus()) || LetterStatus.USED.equals(l.getStatus())) && used.indexOf(l.getLetter()) == -1) {
-                            used.add(l.getLetter());
-                        }
-                        if (LetterStatus.NOT_USED.equals(l.getStatus()) && notUsed.indexOf(l.getLetter()) == -1) {
-                            notUsed.add(l.getLetter());
-                        }
+                    } catch (WordNotMatchPattern | WordNotFoundException e) {
+                        printErrorMessage(e.getMessage());
                     }
 
+                    printAttempts(logic.getAttempts());
                 }
-                printAttempts(logic.getAttempts());
-            }
 
-        } while (logic.isGameActive());
+            } while (logic.isGameActive());
 
-        System.out.println("!!! GAME OVER !!!");
-        System.out.println("Target word is: " + logic.getTargetWord());
-        System.out.println("Press Enter to go to the menu");
-        try {
+            System.out.println("!!! GAME OVER !!!");
+            System.out.println("Target word is: " + logic.getTargetWord());
+            System.out.println("Press Enter to go to the menu");
             System.in.read();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
 
+        } catch (StartGameException e) {
+            printErrorMessage("Error! Can't start game.");
+        } catch (IOException e) {
+            printErrorMessage("Input Error! Ending game...");
+        }
     }
 }
