@@ -10,13 +10,12 @@ import logic.*;
 import org.fusesource.jansi.AnsiConsole;
 
 import static org.fusesource.jansi.Ansi.*;
-import static org.fusesource.jansi.Ansi.Color.*;
 
 public class ConsoleView {
 
-    private List<Character> used;           //коллекция букв которые используюся в загаданом слове
-    private List<Character> notUsed;        //коллекция букв которые не используются в загаданом слове
-    private List<Character> inPosition;     //коллекция которая указывает позицию верно расположенных букв в загаданом слове
+    private final List<Character> used;           //коллекция букв которые используюся в загаданом слове
+    private final List<Character> notUsed;        //коллекция букв которые не используются в загаданом слове
+    private final List<Character> inPosition;     //коллекция которая указывает позицию верно расположенных букв в загаданом слове
     private static final int ROUNDS = 5;
 
     public ConsoleView() {
@@ -145,13 +144,13 @@ public class ConsoleView {
                 if (scanner.hasNext()) {
                     choice = scanner.next().toLowerCase();
                     System.out.println(ansi().eraseScreen());
-                    try {
-                        if (logic.isWordExist(choice)) {
-                            letterAnalysis(logic.wordAnalysis(choice));
-                        }
-                    } catch (WordNotMatchPattern | WordNotFoundException e) {
-                        printErrorMessage(e.getMessage());
+
+                    if (logic.isWordExist(choice)) {
+                        letterAnalysis(logic.wordAnalysis(choice));
+                    } else {
+                        printErrorMessage("! Word not found in storage. The word contains 5 latin letters.");
                     }
+
 
                     printAttempts(logic.getAttempts());
                 }
@@ -163,7 +162,7 @@ public class ConsoleView {
             System.out.println("Press Enter to go to the menu");
             System.in.read();
 
-        } catch (StartGameException e) {
+        } catch (NullTargetWordException e) {
             printErrorMessage("Error! Can't start game.");
         } catch (IOException e) {
             printErrorMessage("Input Error! Ending game...");

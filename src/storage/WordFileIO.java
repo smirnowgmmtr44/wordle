@@ -19,20 +19,22 @@ public class WordFileIO implements WordIOInterface {
         this.fileName = fileName;
     }
 
-    public boolean search(String word) throws IOException {
+    public WordIOResult<Boolean> search(String word) {
         try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
             String line;
             while ((line = bw.readLine()) != null) {
                 if (line.equals(word)) {
-                    return true;
+                    return new WordIOResult(true, true);
                 }
             }
-            throw new IOException();
+            return new WordIOResult(false, true);
+        } catch (IOException e) {
+            return new WordIOResult(false, false);
         }
 
     }
 
-    public int getWordsCount() throws IOException {
+    public int getWordsCount() {
         int count = 0;
         try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
             String line;
@@ -40,26 +42,28 @@ public class WordFileIO implements WordIOInterface {
                 count++;
             }
         } catch (IOException e) {
-            throw new IOException("Can't get word count");
+            return -1;
         }
         return count;
     }
 
-    public String getWordById(int id) throws IOException {
+    public WordIOResult<String> getWordById(int id) {
         int position = 0;
         try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
             String line;
             while ((line = bw.readLine()) != null) {
                 if (id == position) {
-                    return line;
+                    return new WordIOResult(line, true);
                 }
                 position++;
             }
-            throw new IOException("Can't get word from storage");
+            return new WordIOResult(null, false);
+        } catch (IOException e) {
+            return new WordIOResult(null, false);
         }
     }
 
-    public String getRandomWord() throws IOException {
+    public WordIOResult<String> getRandomWord() {
         int index = random.nextInt(getWordsCount());
         return getWordById(index);
     }
