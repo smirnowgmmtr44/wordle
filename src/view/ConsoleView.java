@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import logic.enums.LetterStatus;
 import logic.exception.NullTargetWordException;
 import logic.model.Letter;
-import logic.model.Word;
+import logic.model.Attempt;
 import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
 import storage.FileWordStorage;
@@ -83,7 +83,7 @@ public class ConsoleView {
         System.out.println();
     }
 
-    void printAttempts(List<Word> list) {
+    void printAttempts(List<Attempt> list) {
         //System.out.println(ansi().eraseScreen());
         System.out.print("Used letters: " + Colors.YELLOW.getCode());
         printList(used);
@@ -91,7 +91,7 @@ public class ConsoleView {
         System.out.print("Not used letters: ");
         printList(notUsed);
         System.out.println("-----");
-        for (Word word : list) {
+        for (Attempt word : list) {
             for (Letter l : word.getLetters()) {
                 switch (l.getStatus()) {
                     case LetterStatus.IN_POSITION:
@@ -137,32 +137,41 @@ public class ConsoleView {
 
     void start(Scanner scanner, int rounds) {
         try {
-            Game logic = new Game(new FileWordStorage(),rounds);
+            Game game = new Game(new FileWordStorage(), rounds);
+            if (game.isNotValid()) {
+                throw new NullTargetWordException();
+            }
             String choice;
             System.out.println(ansi().eraseScreen());
             do {
                 inPosition.clear();
-                System.out.println("Attempts: " + logic.getAttemptsLeft() + "/" + logic.getCountOfTry());
+                System.out.println("Attempts: " + game.getAttemptsLeft() + "/" + game.getCountOfTry());
                 System.out.println("Try to guess the word:");
 
                 if (scanner.hasNext()) {
                     choice = scanner.next().toLowerCase();
                     System.out.println(ansi().eraseScreen());
 
-                    if (logic.isWordExist(choice)) {
-                        letterAnalysis(logic.wordAnalysis(choice));
+                    if (game.isWordExist(choice)) {
+                        letterAnalysis(game.wordAnalysis(choice));
                     } else {
                         printErrorMessage("! Word not found in storage. The word contains 5 latin letters.");
                     }
 
 
-                    printAttempts(logic.getAttempts());
+                    printAttempts(game.getAttempts());
                 }
 
-            } while (logic.isGameActive());
+            } while (game.isGameActive());
 
-            System.out.println("!!! GAME OVER !!!");
-            System.out.println("Target word is: " + logic.getTargetWord());
+            String endgameText;
+            if (game.isTargetWordInAttempts()) {
+                endgameText = "!!! CONGRATULATIONS YOU WON !!!";
+            } else {
+                endgameText = "!!! GAME OVER !!!";
+            }
+            System.out.println(endgameText);
+            System.out.println("Target word is: " + game.getTargetWord());
             System.out.println("Press Enter to go to the menu");
             System.in.read();
 

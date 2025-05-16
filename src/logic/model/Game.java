@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import logic.enums.LetterStatus;
-import logic.exception.NullTargetWordException;
-//import storage.FileWordStorage;
 
 public class Game {
 
     private final WordStorage storage;
     private final int countOfTry;
-    private List<Word> attempts = new ArrayList<Word>();
+    private List<Attempt> attempts = new ArrayList<Attempt>();
 
     private final String targetWord;
     private final static int WORLD_LENGTH = 5;
@@ -27,16 +25,13 @@ public class Game {
         this.storage = storage;
         targetWord = storage.getRandomWord().getValue();
         countOfTry = rounds;
-        if(targetWord == null){
-            throw new NullTargetWordException();
-        }
     }
 
     public int getCountOfTry() {
         return countOfTry;
     }
 
-    public List<Word> getAttempts() {
+    public List<Attempt> getAttempts() {
         return attempts;
     }
 
@@ -73,9 +68,9 @@ public class Game {
      * @return Метод возвращает true если слово совпадает с загаданным, иначе возвращает false
      */
     public List<Letter> wordAnalysis(String word) {
-        Word result = new Word();
+        Attempt result = new Attempt();
         if (targetWord.equals(word)) {
-            attempts.add(Word.getWordWithAllLettersInStatus(word, LetterStatus.IN_POSITION));
+            attempts.add(new Attempt(word, LetterStatus.IN_POSITION));
         } else {
             for (int i = 0; i < word.length(); i++) {
                 if (targetWord.indexOf(word.charAt(i)) != -1) {
@@ -98,7 +93,7 @@ public class Game {
     }
 
     public boolean isTargetWordInAttempts() {
-        for (Word w : attempts) {
+        for (Attempt w : attempts) {
             if (w.getWordString().equals(targetWord)) {
                 return true;
             }
@@ -112,6 +107,14 @@ public class Game {
 
     public boolean isGameActive() {
         return countOfTry > attempts.size() && isTargetWordNotInAttempts();
+    }
+
+    public boolean isValid() {
+        return targetWord != null;
+    }
+
+    public boolean isNotValid() {
+        return !isValid();
     }
 
 }

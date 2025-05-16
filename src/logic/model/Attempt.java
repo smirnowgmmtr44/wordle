@@ -5,28 +5,25 @@ import logic.enums.LetterStatus;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Word {
+public class Attempt {
 
     private final List<Letter> letters;
 
-    public Word() {
+    public Attempt() {
         letters = new ArrayList<>();
     }
 
     /**
-     * Возващает слово у которого все буквы в определенном статусе
+     * Создает попытку у которой все буквы в определенном статусе
      *
      * @param word   Слово
-     * @param status Статус который будет указан у всех букв в слове
-     * @return Возвращает список букв в определенном статусе
+     * @param status Статус который будет указан у всех букв в попытке
      */
-    public static Word getWordWithAllLettersInStatus(String word, LetterStatus status) {
-        Word result = new Word();
-        //List<Letter> letters = new ArrayList<>();
+    public Attempt(String word, LetterStatus status) {
+        this();
         for (char c : word.toCharArray()) {
-            result.add(new Letter(c, status));
+            letters.add(new Letter(c, status));
         }
-        return result;
     }
 
     public void add(Letter letter) {
