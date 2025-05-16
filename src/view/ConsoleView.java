@@ -5,11 +5,15 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.LinkedList;
 
-import logic.*;
-
+import logic.enums.LetterStatus;
+import logic.exception.NullTargetWordException;
+import logic.model.Letter;
+import logic.model.Word;
+import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
+import storage.FileWordStorage;
 
-import static org.fusesource.jansi.Ansi.*;
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class ConsoleView {
 
@@ -133,7 +137,7 @@ public class ConsoleView {
 
     void start(Scanner scanner, int rounds) {
         try {
-            WordleLogic logic = new WordleLogic(rounds);
+            Game logic = new Game(new FileWordStorage(),rounds);
             String choice;
             System.out.println(ansi().eraseScreen());
             do {

@@ -1,14 +1,16 @@
-package logic;
+package logic.model;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import storage.WordIOInterface;
-import storage.WordFileIO;
+import logic.enums.LetterStatus;
+import logic.exception.NullTargetWordException;
+//import storage.FileWordStorage;
 
-public class WordleLogic {
+public class Game {
 
-    private final WordIOInterface storage;
+    private final WordStorage storage;
     private final int countOfTry;
     private List<Word> attempts = new ArrayList<Word>();
 
@@ -17,12 +19,12 @@ public class WordleLogic {
     private final Pattern pattern = Pattern.compile("[a-zA-Z]{" + WORLD_LENGTH + "}", Pattern.CASE_INSENSITIVE);
     private final static int DEFAULT_COUNT_OF_TRY = 6;
 
-    public WordleLogic() {
-        this(DEFAULT_COUNT_OF_TRY);
+    public Game(WordStorage storage) {
+        this(storage, DEFAULT_COUNT_OF_TRY);
     }
 
-    public WordleLogic(int rounds)  {
-        storage = new WordFileIO();
+    public Game(WordStorage storage,int rounds)  {
+        this.storage = storage;
         targetWord = storage.getRandomWord().getValue();
         countOfTry = rounds;
         if(targetWord == null){

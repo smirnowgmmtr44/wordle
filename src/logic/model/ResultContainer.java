@@ -1,10 +1,10 @@
-package storage;
+package logic.model;
 
-public class WordIOResult<T> {
+public class ResultContainer<T> {
     T value;
     boolean status;
 
-    public WordIOResult(T value, boolean status){
+    public ResultContainer(T value, boolean status){
         this.value = value;
         this.status = status;
     }

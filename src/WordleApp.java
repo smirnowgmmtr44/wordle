@@ -1,4 +1,4 @@
-import view.*;
+import view.ConsoleView;
 
 public class WordleApp {
     public static void main(String args[]) {

@@ -1,4 +1,6 @@
-package logic;
+package logic.model;
+
+import logic.enums.LetterStatus;
 
 import java.util.List;
 import java.util.ArrayList;
