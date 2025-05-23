@@ -67,7 +67,7 @@ public class Game {
      * @param word Введенное пользователем слово
      * @return Метод возвращает список букв со статсусом.
      */
-    public List<Letter> createAttempt(String word) {
+    public void createAttempt(String word) {
         Attempt result = new Attempt();
         if (targetWord.equals(word)) {
             attempts.add(new Attempt(word, LetterStatus.IN_POSITION));
@@ -89,17 +89,20 @@ public class Game {
             }
             attempts.add(result);
         }
-        return attempts.get(attempts.size() - 1).getLetters();
     }
 
-    public boolean hasSuccessAttempt() {
+    private boolean hasSuccessAttempt() {
         Attempt attempt = attempts.getLast();
         if (attempt.isSuccess()) {
             return true;
         }
         return false;
     }
-    public boolean hasNotSuccessAttempt(){
+    public boolean isWin() {
+       return hasSuccessAttempt();
+    }
+
+    public boolean hasNotSuccessAttempt() {
         return !hasSuccessAttempt();
     }
 
