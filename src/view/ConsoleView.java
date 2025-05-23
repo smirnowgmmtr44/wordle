@@ -119,17 +119,17 @@ public class ConsoleView {
         System.out.print(Colors.WHITE.getCode());
     }
 
-    private void letterAnalysis(List<Letter> letters) {
+    private void prepareGameStatus(List<Letter> letters) {
         for (Letter l : letters) {
             if (LetterStatus.IN_POSITION.equals(l.getStatus())) {
                 inPosition.add(l.getLetter());
             } else {
                 inPosition.add('_');
             }
-            if ((LetterStatus.IN_POSITION.equals(l.getStatus()) || LetterStatus.USED.equals(l.getStatus())) && used.indexOf(l.getLetter()) == -1) {
+            if ((LetterStatus.IN_POSITION.equals(l.getStatus()) || LetterStatus.USED.equals(l.getStatus())) && !used.contains(l.getLetter())) {
                 used.add(l.getLetter());
             }
-            if (LetterStatus.NOT_USED.equals(l.getStatus()) && notUsed.indexOf(l.getLetter()) == -1) {
+            if (LetterStatus.NOT_USED.equals(l.getStatus()) && !notUsed.contains(l.getLetter())) {
                 notUsed.add(l.getLetter());
             }
         }
@@ -153,7 +153,7 @@ public class ConsoleView {
                     System.out.println(ansi().eraseScreen());
 
                     if (game.isWordExist(choice)) {
-                        letterAnalysis(game.wordAnalysis(choice));
+                        prepareGameStatus(game.createAttempt(choice));
                     } else {
                         printErrorMessage("! Word not found in storage. The word contains 5 latin letters.");
                     }
@@ -165,7 +165,7 @@ public class ConsoleView {
             } while (game.isGameActive());
 
             String endgameText;
-            if (game.isTargetWordInAttempts()) {
+            if (game.hasSuccessAttempt()) {
                 endgameText = "!!! CONGRATULATIONS YOU WON !!!";
             } else {
                 endgameText = "!!! GAME OVER !!!";

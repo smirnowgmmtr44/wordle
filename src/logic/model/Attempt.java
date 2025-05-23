@@ -34,11 +34,12 @@ public class Attempt {
         return letters;
     }
 
-    public String getWordString() {
-        StringBuilder result = new StringBuilder();
+    public boolean isSuccess() {
         for (Letter l : letters) {
-            result.append(l.getLetter());
+            if(!LetterStatus.IN_POSITION.equals(l.getStatus())){
+                return false;
+            }
         }
-        return result.toString();
+        return true;
     }
 }

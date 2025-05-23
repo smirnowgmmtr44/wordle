@@ -21,7 +21,7 @@ public class Game {
         this(storage, DEFAULT_COUNT_OF_TRY);
     }
 
-    public Game(WordStorage storage,int rounds)  {
+    public Game(WordStorage storage, int rounds) {
         this.storage = storage;
         targetWord = storage.getRandomWord().getValue();
         countOfTry = rounds;
@@ -65,9 +65,9 @@ public class Game {
      * Метод для анализа букв в слове
      *
      * @param word Введенное пользователем слово
-     * @return Метод возвращает true если слово совпадает с загаданным, иначе возвращает false
+     * @return Метод возвращает список букв со статсусом.
      */
-    public List<Letter> wordAnalysis(String word) {
+    public List<Letter> createAttempt(String word) {
         Attempt result = new Attempt();
         if (targetWord.equals(word)) {
             attempts.add(new Attempt(word, LetterStatus.IN_POSITION));
@@ -92,21 +92,19 @@ public class Game {
         return attempts.get(attempts.size() - 1).getLetters();
     }
 
-    public boolean isTargetWordInAttempts() {
-        for (Attempt w : attempts) {
-            if (w.getWordString().equals(targetWord)) {
-                return true;
-            }
+    public boolean hasSuccessAttempt() {
+        Attempt attempt = attempts.getLast();
+        if (attempt.isSuccess()) {
+            return true;
         }
         return false;
     }
-
-    public boolean isTargetWordNotInAttempts() {
-        return !isTargetWordInAttempts();
+    public boolean hasNotSuccessAttempt(){
+        return !hasSuccessAttempt();
     }
 
     public boolean isGameActive() {
-        return countOfTry > attempts.size() && isTargetWordNotInAttempts();
+        return countOfTry > attempts.size() && hasNotSuccessAttempt();
     }
 
     public boolean isValid() {
