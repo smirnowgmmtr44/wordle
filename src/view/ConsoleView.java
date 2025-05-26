@@ -10,7 +10,7 @@ import logic.model.Letter;
 import logic.model.Attempt;
 import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
-import storage.FileWordStorage;
+import storage.model.FileWordStorage;
 
 import static org.fusesource.jansi.Ansi.ansi;
 

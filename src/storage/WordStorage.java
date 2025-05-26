@@ -1,4 +1,6 @@
-package logic.model;
+package storage;
+
+import logic.model.ResultContainer;
 
 public interface WordStorage {
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import logic.enums.LetterStatus;
+import storage.WordStorage;
 
 public class Game {
 
