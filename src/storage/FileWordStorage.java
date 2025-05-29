@@ -1,7 +1,7 @@
-package storage.model;
+package storage;
 
 import logic.model.ResultContainer;
-import storage.WordStorage;
+import logic.storage.WordStorage;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

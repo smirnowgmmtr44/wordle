@@ -1,4 +1,4 @@
-package storage;
+package logic.storage;
 
 import logic.model.ResultContainer;
 

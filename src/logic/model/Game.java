@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import logic.enums.LetterStatus;
-import storage.WordStorage;
+import logic.storage.WordStorage;
 
 public class Game {
 
@@ -63,10 +63,10 @@ public class Game {
     }
 
     /**
-     * Метод для анализа букв в слове
+     * Метод для создания попытки
      *
      * @param word Введенное пользователем слово
-     * @return Метод возвращает список букв со статсусом.
+     *
      */
     public void createAttempt(String word) {
         Attempt result = new Attempt();
@@ -93,9 +93,12 @@ public class Game {
     }
 
     private boolean hasSuccessAttempt() {
-        Attempt attempt = attempts.getLast();
-        if (attempt.isSuccess()) {
-            return true;
+        Attempt attempt;
+        if(attempts.size()!=0) {
+            attempt = attempts.get(attempts.size() - 1);
+            if (attempt.isSuccess()) {
+                return true;
+            }
         }
         return false;
     }

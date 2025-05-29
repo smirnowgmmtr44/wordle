@@ -10,7 +10,7 @@ import logic.model.Letter;
 import logic.model.Attempt;
 import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
-import storage.model.FileWordStorage;
+import storage.FileWordStorage;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
@@ -21,25 +21,21 @@ public class ConsoleView {
     public ConsoleView() {
     }
 
-    public void menu() {
-        int choice = 0;
+    public void menu() throws IOException {
+        String choice = "";
         try (Scanner scanner = new Scanner(System.in)) {
             AnsiConsole.systemInstall();
             do {
                 menuText();
                 if (scanner.hasNext()) {
-                    try {
-                        choice = Integer.parseInt(scanner.next());
-                    } catch (NumberFormatException e) {
-                        choice = -1;
-                    }
+                    choice = scanner.next().trim();
                 }
                 switch (choice) {
-                    case 0:
+                    case "0":
                         System.out.println("Exiting...");
                         System.out.println();
                         break;
-                    case 1:
+                    case "1":
                         System.out.println("Starting game...");
                         start(scanner, ROUNDS);
                         break;
@@ -47,7 +43,7 @@ public class ConsoleView {
                         System.out.println("Type number 0-1");
                         break;
                 }
-            } while (choice != 0);
+            } while (!choice.equals("0"));
         } finally {
             AnsiConsole.systemUninstall();
         }
@@ -78,17 +74,9 @@ public class ConsoleView {
     private void printGameStatus(List<Attempt> attempts) {
         List<Character> used = new ArrayList<>(); //коллекция букв которые используюся в загаданом слове
         List<Character> notUsed = new ArrayList<>(); //коллекция букв которые не используются в загаданом слове
-       // List<Character> inPosition = new ArrayList<>(); //коллекция которая указывает позицию верно расположенных букв в загаданом слове
 
         for (Attempt attempt : attempts) {
             for (Letter l : attempt.getLetters()) {
-                /*if(attempt.equals(attempts.getLast())){
-                    if (LetterStatus.IN_POSITION.equals(l.getStatus())) {
-                        inPosition.add(l.getLetter());
-                    } else {
-                        inPosition.add('_');
-                    }
-                }*/
                 if ((LetterStatus.IN_POSITION.equals(l.getStatus()) || LetterStatus.USED.equals(l.getStatus())) && !used.contains(l.getLetter())) {
                     used.add(l.getLetter());
                 }
@@ -106,13 +94,13 @@ public class ConsoleView {
         for (Attempt word : attempts) {
             for (Letter l : word.getLetters()) {
                 switch (l.getStatus()) {
-                    case LetterStatus.IN_POSITION:
+                    case IN_POSITION:
                         System.out.print(Colors.GREEN.getCode() + "[" + l.getLetter() + "]" + Colors.WHITE.getCode());
                         break;
-                    case LetterStatus.USED:
+                    case USED:
                         System.out.print(Colors.YELLOW.getCode() + "[" + l.getLetter() + "]" + Colors.WHITE.getCode());
                         break;
-                    case LetterStatus.NOT_USED:
+                    case NOT_USED:
                         System.out.print("[" + l.getLetter() + "]");
                         break;
                     default:
@@ -125,49 +113,47 @@ public class ConsoleView {
         System.out.println("-----");
     }
 
-    void start(Scanner scanner, int rounds) {
-        try {
-            Game game = new Game(new FileWordStorage(), rounds);
-            if (game.isNotValid()) {
-                printErrorMessage("Error! Can't start game.");
-                System.out.println("Press Enter to go to the menu");
-                System.in.read();
-                return;
-            }
-            String choice;
-            System.out.println(ansi().eraseScreen());
-            do {
-                System.out.println("Attempts: " + game.getAttemptsLeft() + "/" + game.getCountOfTry());
-                System.out.println("Try to guess the word:");
+    void start(Scanner scanner, int rounds) throws IOException {
 
-                if (scanner.hasNext()) {
-                    choice = scanner.next().toLowerCase();
-                    System.out.println(ansi().eraseScreen());
-
-                    if (game.isWordExist(choice)) {
-                        game.createAttempt(choice);
-                    } else {
-                        printErrorMessage("! Word not found in storage. The word contains 5 latin letters.");
-                    }
-
-                    printGameStatus(game.getAttempts());
-                }
-
-            } while (game.isGameActive());
-
-            String endgameText;
-            if (game.isWin()) {
-                endgameText = "!!! CONGRATULATIONS YOU WON !!!";
-            } else {
-                endgameText = "!!! GAME OVER !!!";
-            }
-            System.out.println(endgameText);
-            System.out.println("Target word is: " + game.getTargetWord());
+        Game game = new Game(new FileWordStorage(), rounds);
+        if (game.isNotValid()) {
+            printErrorMessage("Error! Can't start game.");
             System.out.println("Press Enter to go to the menu");
             System.in.read();
-
-        } catch (IOException e) {
-            printErrorMessage("Input Error! Ending game...");
+            return;
         }
+        String choice;
+        System.out.println(ansi().eraseScreen());
+        do {
+            System.out.println("Attempts: " + game.getAttemptsLeft() + "/" + game.getCountOfTry());
+            System.out.println("Try to guess the word:");
+
+            if (scanner.hasNext()) {
+                choice = scanner.next().toLowerCase();
+                System.out.println(ansi().eraseScreen());
+
+                if (game.isWordExist(choice)) {
+                    game.createAttempt(choice);
+                } else {
+                    printErrorMessage("! Word not found in storage. The word contains 5 latin letters.");
+                }
+
+                printGameStatus(game.getAttempts());
+            }
+
+        } while (game.isGameActive());
+
+        String endgameText;
+        if (game.isWin()) {
+            endgameText = "!!! CONGRATULATIONS YOU WON !!!";
+        } else {
+            endgameText = "!!! GAME OVER !!!";
+        }
+        System.out.println(endgameText);
+        System.out.println("Target word is: " + game.getTargetWord());
+        System.out.println("Press Enter to go to the menu");
+        System.in.read();
+
+
     }
 }
