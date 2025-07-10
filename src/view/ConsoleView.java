@@ -6,17 +6,23 @@ import java.util.Scanner;
 import java.util.List;
 
 import logic.enums.LetterStatus;
+import logic.model.GameFactory;
 import logic.model.Letter;
 import logic.model.Attempt;
 import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
 import storage.FileWordStorage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class ConsoleView {
 
     private static final int ROUNDS = 5;
+
+    @Autowired
+    GameFactory gameFactory;
 
     public ConsoleView() {
     }
@@ -115,7 +121,7 @@ public class ConsoleView {
 
     void start(Scanner scanner, int rounds) throws IOException {
 
-        Game game = new Game(new FileWordStorage(), rounds);
+        Game game = gameFactory.createGame(rounds);//new Game(new FileWordStorage(), rounds);
         if (game.isNotValid()) {
             printErrorMessage("Error! Can't start game.");
             System.out.println("Press Enter to go to the menu");
