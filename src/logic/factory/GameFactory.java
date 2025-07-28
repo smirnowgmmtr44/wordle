@@ -1,5 +1,6 @@
-package logic.model;
+package logic.factory;
 
+import logic.model.Game;
 import logic.storage.WordStorage;
 
 public class GameFactory {

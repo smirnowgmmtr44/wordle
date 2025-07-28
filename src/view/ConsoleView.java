@@ -6,53 +6,62 @@ import java.util.Scanner;
 import java.util.List;
 
 import logic.enums.LetterStatus;
-import logic.model.GameFactory;
+import logic.factory.GameFactory;
 import logic.model.Letter;
 import logic.model.Attempt;
 import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
-import storage.FileWordStorage;
 
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.fusesource.jansi.Ansi.ansi;
 
-public class ConsoleView {
+public class ConsoleView implements DisposableBean, InitializingBean {
 
     private static final int ROUNDS = 5;
+    private GameFactory gameFactory;
+    private Scanner scanner;
 
-    @Autowired
-    GameFactory gameFactory;
+    public ConsoleView(GameFactory gameFactory,Scanner scanner){
+        this.gameFactory = gameFactory;
+        this.scanner = scanner;
+    }
 
-    public ConsoleView() {
+    @Override
+    public void destroy() {
+        AnsiConsole.systemUninstall();
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        AnsiConsole.systemInstall();
     }
 
     public void menu() throws IOException {
         String choice = "";
-        try (Scanner scanner = new Scanner(System.in)) {
-            AnsiConsole.systemInstall();
-            do {
-                menuText();
-                if (scanner.hasNext()) {
-                    choice = scanner.next().trim();
-                }
-                switch (choice) {
-                    case "0":
-                        System.out.println("Exiting...");
-                        System.out.println();
-                        break;
-                    case "1":
-                        System.out.println("Starting game...");
-                        start(scanner, ROUNDS);
-                        break;
-                    default:
-                        System.out.println("Type number 0-1");
-                        break;
-                }
-            } while (!choice.equals("0"));
-        } finally {
-            AnsiConsole.systemUninstall();
-        }
+
+
+        do {
+            menuText();
+            if (scanner.hasNext()) {
+                choice = scanner.next().trim();
+            }
+            switch (choice) {
+                case "0":
+                    System.out.println("Exiting...");
+                    System.out.println();
+                    break;
+                case "1":
+                    System.out.println("Starting game...");
+                    start(ROUNDS);
+                    break;
+                default:
+                    System.out.println("Type number 0-1");
+                    break;
+            }
+        } while (!choice.equals("0"));
 
     }
 
@@ -119,7 +128,7 @@ public class ConsoleView {
         System.out.println("-----");
     }
 
-    void start(Scanner scanner, int rounds) throws IOException {
+    void start(int rounds) throws IOException {
 
         Game game = gameFactory.createGame(rounds);//new Game(new FileWordStorage(), rounds);
         if (game.isNotValid()) {

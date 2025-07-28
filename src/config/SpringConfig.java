@@ -1,22 +1,29 @@
 package config;
 
-import logic.model.GameFactory;
+import logic.factory.GameFactory;
 import logic.storage.WordStorage;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import storage.FileWordStorage;
 import view.ConsoleView;
 
+import java.util.Scanner;
+
 @Configuration
 public class SpringConfig {
     @Bean
-    public ConsoleView viewBean() {
-        return new ConsoleView();
+    public Scanner scannerBean() {
+        return new Scanner(System.in);
     }
 
     @Bean
     public GameFactory gameBean() {
         return new GameFactory(storageBean());
+    }
+
+    @Bean
+    public ConsoleView viewBean() {
+        return new ConsoleView(gameBean(), scannerBean());
     }
 
     @Bean

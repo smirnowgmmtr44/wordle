@@ -13,7 +13,7 @@ public class WordleApp {
     static void start() {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfig.class);
         try {
-            ConsoleView view = (ConsoleView) ctx.getBean("viewBean");//new ConsoleView();
+            ConsoleView view = (ConsoleView) ctx.getBean(ConsoleView.class);
             view.menu();
         }  catch (IOException e) {
             System.out.println("Input Error! Ending game...");
