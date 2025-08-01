@@ -23,10 +23,10 @@
 
     </dependencies>
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <resources>
             <resource>
-                <directory>resources</directory>
+                <directory>src/main/resources/</directory>
             </resource>
         </resources>
         <finalName>Wordle</finalName>
@@ -40,7 +40,7 @@
                         <manifestFile>manifest.txt</manifestFile>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>WordleApp</mainClass>
+                            <mainClass>main.java.WordleApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -63,7 +63,7 @@
                             <manifestFile>manifest.txt</manifestFile>
                             <manifest>
                                 <addClasspath>true</addClasspath>
-                                <mainClass>WordleApp</mainClass>
+                                <mainClass>main.java.WordleApp</mainClass>
                             </manifest>
                         </archive>
                 </configuration>

@@ -1,1 +1,1 @@
-Main-Class: WordleApp
+Main-Class: main.java.WordleApp

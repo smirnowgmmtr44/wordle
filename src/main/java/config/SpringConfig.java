@@ -1,11 +1,11 @@
-package config;
+package main.java.config;
 
-import logic.factory.GameFactory;
-import logic.storage.WordStorage;
+import main.java.logic.factory.GameFactory;
+import main.java.logic.storage.WordStorage;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
-import storage.FileWordStorage;
-import view.ConsoleView;
+import main.java.storage.FileWordStorage;
+import main.java.view.ConsoleView;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package logic.enums;
+package main.java.logic.enums;
 
 public enum LetterStatus {
     IN_POSITION,

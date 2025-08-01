@@ -1,10 +1,9 @@
-package storage;
+package main.java.storage;
 
-import logic.model.ResultContainer;
-import logic.storage.WordStorage;
+import main.java.logic.model.ResultContainer;
+import main.java.logic.storage.WordStorage;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Random;

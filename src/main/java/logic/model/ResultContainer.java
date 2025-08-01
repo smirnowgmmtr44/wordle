@@ -1,4 +1,4 @@
-package logic.model;
+package main.java.logic.model;
 
 public class ResultContainer<T> {
     T value;

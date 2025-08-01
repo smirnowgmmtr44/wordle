@@ -1,7 +1,7 @@
-package logic.factory;
+package main.java.logic.factory;
 
-import logic.model.Game;
-import logic.storage.WordStorage;
+import main.java.logic.model.Game;
+import main.java.logic.storage.WordStorage;
 
 public class GameFactory {
 

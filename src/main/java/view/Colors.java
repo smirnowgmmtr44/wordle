@@ -1,4 +1,4 @@
-package view;
+package main.java.view;
 
 public enum Colors {
     RED("\u001B[31m"), YELLOW("\u001B[33m"), WHITE("\u001B[0m"), GREEN("\u001B[32m");
