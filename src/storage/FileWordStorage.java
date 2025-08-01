@@ -6,6 +6,7 @@ import logic.storage.WordStorage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 public class FileWordStorage implements WordStorage {
@@ -14,7 +15,7 @@ public class FileWordStorage implements WordStorage {
     private final Random random;
 
     public FileWordStorage() {
-        this("resources/wordle.txt");
+        this("/wordle.txt");
     }
 
     public FileWordStorage(String fileName) {
@@ -23,7 +24,7 @@ public class FileWordStorage implements WordStorage {
     }
 
     public ResultContainer<Boolean> search(String word) {
-        try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
+        try (BufferedReader bw = new BufferedReader(new InputStreamReader(FileWordStorage.class.getResourceAsStream(fileName)))) {
             String line;
             while ((line = bw.readLine()) != null) {
                 if (line.equals(word)) {
@@ -39,7 +40,7 @@ public class FileWordStorage implements WordStorage {
 
     public int getWordsCount() {
         int count = 0;
-        try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
+        try (BufferedReader bw = new BufferedReader(new InputStreamReader(FileWordStorage.class.getResourceAsStream(fileName)))) {
             String line;
             while ((line = bw.readLine()) != null) {
                 count++;
@@ -52,7 +53,7 @@ public class FileWordStorage implements WordStorage {
 
     public ResultContainer<String> getWordById(int id) {
         int position = 0;
-        try (BufferedReader bw = new BufferedReader(new FileReader(this.fileName))) {
+        try (BufferedReader bw = new BufferedReader(new InputStreamReader(FileWordStorage.class.getResourceAsStream(fileName)))) {
             String line;
             while ((line = bw.readLine()) != null) {
                 if (id == position) {
