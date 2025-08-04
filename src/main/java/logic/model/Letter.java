@@ -1,6 +1,6 @@
-package main.java.logic.model;
+package logic.model;
 
-import main.java.logic.enums.LetterStatus;
+import logic.enums.LetterStatus;
 
 public class Letter {
 

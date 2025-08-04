@@ -1,15 +1,15 @@
-package main.java.view;
+package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.List;
 
-import main.java.logic.enums.LetterStatus;
-import main.java.logic.factory.GameFactory;
-import main.java.logic.model.Letter;
-import main.java.logic.model.Attempt;
-import main.java.logic.model.Game;
+import logic.enums.LetterStatus;
+import logic.factory.GameFactory;
+import logic.model.Letter;
+import logic.model.Attempt;
+import logic.model.Game;
 import org.fusesource.jansi.AnsiConsole;
 
 import org.springframework.beans.factory.DisposableBean;
@@ -149,7 +149,7 @@ public class ConsoleView implements DisposableBean, InitializingBean {
                 if (game.isWordExist(choice)) {
                     game.createAttempt(choice);
                 } else {
-                    printErrorMessage("! Word not found in main.java.storage. The word contains 5 latin letters.");
+                    printErrorMessage("! Word not found in storage. The word contains 5 latin letters.");
                 }
 
                 printGameStatus(game.getAttempts());

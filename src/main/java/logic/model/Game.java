@@ -1,11 +1,11 @@
-package main.java.logic.model;
+package logic.model;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import main.java.logic.enums.LetterStatus;
-import main.java.logic.storage.WordStorage;
+import logic.enums.LetterStatus;
+import logic.storage.WordStorage;
 
 public class Game {
 

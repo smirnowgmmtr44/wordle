@@ -1,6 +1,6 @@
-package main.java.logic.storage;
+package logic.storage;
 
-import main.java.logic.model.ResultContainer;
+import logic.model.ResultContainer;
 
 public interface WordStorage {
 

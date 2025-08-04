@@ -1264,7 +1264,7 @@ odors
 scrub
 crabs
 probe
-main.java.logic
+logic
 adobe
 exile
 rebel

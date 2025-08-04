@@ -1,7 +1,7 @@
-package main.java.storage;
+package storage;
 
-import main.java.logic.model.ResultContainer;
-import main.java.logic.storage.WordStorage;
+import logic.model.ResultContainer;
+import logic.storage.WordStorage;
 
 import java.io.BufferedReader;
 import java.io.IOException;

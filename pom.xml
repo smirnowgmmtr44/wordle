@@ -37,10 +37,9 @@
                 <version>3.3.0</version>
                 <configuration>
                     <archive>
-                        <manifestFile>manifest.txt</manifestFile>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>main.java.WordleApp</mainClass>
+                            <mainClass>WordleApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -60,10 +59,9 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                         <archive>
-                            <manifestFile>manifest.txt</manifestFile>
                             <manifest>
                                 <addClasspath>true</addClasspath>
-                                <mainClass>main.java.WordleApp</mainClass>
+                                <mainClass>WordleApp</mainClass>
                             </manifest>
                         </archive>
                 </configuration>

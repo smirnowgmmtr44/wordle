@@ -1,7 +1,6 @@
-package main.java;
 
-import main.java.config.SpringConfig;
-import main.java.view.ConsoleView;
+import config.SpringConfig;
+import view.ConsoleView;
 
 import java.io.IOException;
 import org.springframework.context.ApplicationContext;
